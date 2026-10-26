@@ -8,8 +8,9 @@
 
 #include "AInventoryStorage.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FOnInventoryUpdate);
 
-UCLASS()
+UCLASS(Blueprintable)
 class INVENTORY_API AInventoryStorage : public AActor
 {
     GENERATED_BODY()
@@ -21,7 +22,11 @@ public:
     bool AdjustResource(EResources resource, int quantity);
     bool TakeResourceList(std::map<EResources, int> resourceList);
 
+	FOnInventoryUpdate OnInventoryUpdate;
+
 protected:
     std::map<EResources, int> mResourceStorage;
-    const int mMaxAmount = 99;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = "0", UIMin = "0"))
+    int mMaxAmount = 99;
 };

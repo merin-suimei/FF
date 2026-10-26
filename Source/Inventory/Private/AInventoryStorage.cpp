@@ -3,8 +3,7 @@
 AInventoryStorage::AInventoryStorage()
 {
     // Initialize all resources to 0
-    for (const auto resource : {EResources::Resource_A,
-        EResources::Resource_B, EResources::Resource_C})
+    for (const auto resource : {EResources::Resource_A, EResources::Resource_B, EResources::Resource_C})
     {
         mResourceStorage[resource] = 0;
     }
@@ -28,6 +27,8 @@ bool AInventoryStorage::AdjustResource(EResources resource, int quantity)
     }
 
     mResourceStorage[resource] = newAmount;
+
+    OnInventoryUpdate.Broadcast();
     return true;
 }
 
@@ -39,9 +40,10 @@ bool AInventoryStorage::TakeResourceList(std::map<EResources, int> resourceList)
         }
     }
 
-
     for (const auto resource : resourceList) {
         mResourceStorage[resource.first] -= resource.second;
     }
+
+    OnInventoryUpdate.Broadcast();
     return true;
 }
