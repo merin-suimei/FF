@@ -7,4 +7,5 @@
 ATopDownGameMode::ATopDownGameMode()
 {
 	PlayerControllerClass = ATopDownPlayerController::StaticClass();
+    DefaultPawnClass = nullptr;
 }
